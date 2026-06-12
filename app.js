@@ -1305,8 +1305,8 @@ function renderMemberHistory() {
     
     tbody.innerHTML = '';
     
-    // Filter requests submitted by this logged-in member
-    const myRequests = state.requests.filter(req => req.name === state.user.name && req.department === state.user.department);
+    // Filter requests submitted by this logged-in member (by name only, ignoring department)
+    const myRequests = state.requests.filter(req => req.name === state.user.name);
     
     // Sort by date descending
     myRequests.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -1335,11 +1335,10 @@ function renderMemberHistory() {
                             <i class="fa-solid fa-file-image"></i> ดูสลิปประธาน
                         </button>`;
         }
-        
         tr.innerHTML = `
             <td style="font-size: 0.8rem; color: var(--text-muted);">${formatDateTime(req.date)}</td>
             <td>
-                <div style="font-weight: 500;">${req.item}</div>
+                <div style="font-weight: 500;">[${getDeptDisplayName(req.department)}] ${req.item}</div>
                 ${req.memo ? `<div style="font-size:0.75rem; color:var(--text-secondary);">หมายเหตุ: ${req.memo}</div>` : ''}
             </td>
             <td style="font-weight: 600;">${formatCurrency(req.amount)}</td>

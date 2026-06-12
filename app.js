@@ -188,29 +188,26 @@ function saveToLocalStorage() {
     localStorage.setItem('pink_team_finance_state_v3', JSON.stringify(state));
     
     // 2. Save to IndexedDB (asynchronous database)
-    const request = indexedDB.open('pink_team_finance_db', 1);
-    request.onupgradeneeded = (e) => {
-        const dbObj = e.target.result;
-        if (!dbObj.objectStoreNames.contains('app_state')) {
-            dbObj.createObjectStore('app_state');
-        }
-    };
-    request.onsuccess = (e) => {
-        const dbObj = e.target.result;
-        try {
-            const tx = dbObj.transaction('app_state', 'readwrite');
-            const store = tx.objectStore('app_state');
-            store.put(state, 'current_state');
-        } catch(err) {
-            console.error("IndexedDB write error:", err);
-        }
-    };
-    
-    // 3. Save to Firebase Firestore if enabled
-    if (useFirebase && db) {
-        db.collection('settings').doc('pink_team_state').set(state)
-            .then(() => console.log("State synced to Firebase Firestore"))
-            .catch(err => console.error("Error syncing to Firebase:", err));
+    try {
+        const request = indexedDB.open('pink_team_finance_db', 1);
+        request.onupgradeneeded = (e) => {
+            const dbObj = e.target.result;
+            if (!dbObj.objectStoreNames.contains('app_state')) {
+                dbObj.createObjectStore('app_state');
+            }
+        };
+        request.onsuccess = (e) => {
+            const dbObj = e.target.result;
+            try {
+                const tx = dbObj.transaction('app_state', 'readwrite');
+                const store = tx.objectStore('app_state');
+                store.put(state, 'current_state');
+            } catch(err) {
+                console.error("IndexedDB write error:", err);
+            }
+        };
+    } catch (e) {
+        console.warn("IndexedDB not supported or blocked on this protocol:", e);
     }
 }
 
@@ -292,48 +289,54 @@ function setupFirebaseRealtimeListener() {
 }
 
 function loadLocalData(callback) {
-    const request = indexedDB.open('pink_team_finance_db', 1);
-    
-    request.onupgradeneeded = (e) => {
-        const dbObj = e.target.result;
-        if (!dbObj.objectStoreNames.contains('app_state')) {
-            dbObj.createObjectStore('app_state');
-        }
-    };
-    
-    request.onsuccess = (e) => {
-        const dbObj = e.target.result;
-        try {
-            const tx = dbObj.transaction('app_state', 'readonly');
-            const store = tx.objectStore('app_state');
-            const req = store.get('current_state');
-            
-            req.onsuccess = () => {
-                if (req.result) {
-                    state = req.result;
-                    console.log("State loaded successfully from IndexedDB Database");
-                    callback();
-                } else {
+    try {
+        const request = indexedDB.open('pink_team_finance_db', 1);
+        
+        request.onupgradeneeded = (e) => {
+            const dbObj = e.target.result;
+            if (!dbObj.objectStoreNames.contains('app_state')) {
+                dbObj.createObjectStore('app_state');
+            }
+        };
+        
+        request.onsuccess = (e) => {
+            const dbObj = e.target.result;
+            try {
+                const tx = dbObj.transaction('app_state', 'readonly');
+                const store = tx.objectStore('app_state');
+                const req = store.get('current_state');
+                
+                req.onsuccess = () => {
+                    if (req.result) {
+                        state = req.result;
+                        console.log("State loaded successfully from IndexedDB Database");
+                        callback();
+                    } else {
+                        loadFromLocalStorageFallback();
+                        callback();
+                    }
+                };
+                req.onerror = () => {
                     loadFromLocalStorageFallback();
                     callback();
-                }
-            };
-            req.onerror = () => {
+                };
+            } catch(err) {
+                console.error("IndexedDB transaction error:", err);
                 loadFromLocalStorageFallback();
                 callback();
-            };
-        } catch(err) {
-            console.error("IndexedDB transaction error:", err);
+            }
+        };
+        
+        request.onerror = (e) => {
+            console.error("IndexedDB open error during load:", e.target.error);
             loadFromLocalStorageFallback();
             callback();
-        }
-    };
-    
-    request.onerror = (e) => {
-        console.error("IndexedDB open error during load:", e.target.error);
+        };
+    } catch (e) {
+        console.warn("IndexedDB open failed, falling back to LocalStorage:", e);
         loadFromLocalStorageFallback();
         callback();
-    };
+    }
 }
 
 function loadFromLocalStorageFallback() {

@@ -95,14 +95,40 @@
   - ตรวจสอบความถูกต้องรายชื่อเทียบกับภาพถ่ายเอกสารของจริง
   - ยืนยันว่าไม่มีชื่อ ปาลปวีณ์ (รหัส `40206`) ในระบบตามที่ผู้ใช้แจ้ง
 
+### 13. ปรับระบบแบบออฟไลน์และอัปโหลดรูปภาพได้หลายรูป (Multiple Offline Photo Uploads)
+* **ผู้ใช้**: ต้องการปรับระบบการแก้ไขแบบออฟไลน์ทั้งหมดในโครงการย่อย `pink-offline` และเพิ่มความสามารถในการอัปโหลดรูปใบเสร็จและรูปสินค้าได้ทีละหลายรูป
+* **Antigravity (AI)**:
+  - เปลี่ยนแปลงพฤติกรรมของ input ใน `index.html` ให้รองรับการอัปโหลดไฟล์หลายรูป (`multiple`)
+  - อัปเดตตรรกะใน `app.js` เพื่อแสดงตัวอย่างและเก็บข้อมูลรูปภาพที่อัปโหลดทั้งหมดในอาร์เรย์ (`requestDraftImages.receipts` และ `requestDraftImages.productPhotos`) แทนรูปภาพรูปเดียว
+
+### 14. เพิ่มฝ่ายนักกีฬาและปรับหน้า Login (Athletics Dept & Department parenthesized Login)
+* **ผู้ใช้**: เพิ่มฝ่ายนักกีฬาเข้าไปในระบบ และเปลี่ยนตัวเลือก Login ให้แสดงประเภทของสินค้าและมีชื่อฝ่ายในวงเล็บต่อท้าย
+* **Antigravity (AI)**:
+  - เพิ่มฝ่าย `sports` (👟 สวัสดิการนักกีฬา) เข้าไปในโครงสร้างฝ่ายและแผนก
+  - อัปเดต Dropdown ในหน้าล็อกอิน `index.html` ให้แสดงในรูปแบบ: `ประเภทสินค้า / บริการ (ชื่อฝ่ายงาน)`
+
+### 15. แก้ไขปัญหาออฟไลน์ส่งเบิกไม่ไปและเพิ่มระบบย่อรูปภาพ (Offline Failure Fix & Canvas Compression)
+* **ผู้ใช้**: แจ้งปัญหาว่าระบบแบบออฟไลน์ไม่สามารถกดส่งใบเบิกได้ (ส่งไม่ไป)
+* **Antigravity (AI)**:
+  - ตรวจพบว่ารูปภาพจากกล้องมือถือมีขนาดใหญ่ (หลาย MB) เมื่อแปลงเป็น Base64 และบันทึกผ่าน `localStorage` จะเกิด `QuotaExceededError` ส่งผลให้หน้าเว็บหยุดทำงาน
+  - เพิ่มระบบ **Canvas Image Compression** ย่อขนาดภาพให้ยาวสุดไม่เกิน `800px` และบีบอัดไฟล์ JPEG คุณภาพ `70%` (ลดขนาดไฟล์เหลือ ~50-100KB)
+  - ครอบ `try...catch` บน `localStorage` เพื่อป้องกันการ Crash และเตือนผู้ใช้งานเมื่อเมมโมรี่เต็ม
+  - กู้คืนฟังก์ชัน `handleImagePreview` และ `removeImage` สำหรับการอัปโหลดสลิปธนาคารของประธานสวัสดิการสีชมพู
+
+### 16. แสดงประวัติแบบอ้างอิงจากชื่อเท่านั้น (Unified Name History Log)
+* **ผู้ใช้**: ปรับระบบประวัติการเบิกของสมาชิกให้แสดงเหมือนกันไม่ว่าจะเลือกฝ่ายใดตอนล็อกอิน หากล็อกอินเข้ามาด้วยชื่อคนเดิม
+* **Antigravity (AI)**:
+  - เปลี่ยนเงื่อนไขการกรองรายการประวัติใน `renderMemberHistory` ให้ค้นหาผ่านชื่อ `req.name` เพียงอย่างเดียว โดยละทิ้งเงื่อนไขการจับคู่ฝ่าย
+  - เพิ่มป้ายกำกับฝ่ายงานหน้ารายการประวัติสินค้า เช่น `[🎨 ฝ่ายสแตนด์เชียร์] กระดาษสี` เพื่อความสะดวกในการแยกแยะงบประมาณ
+
 ---
 
-## 📂 รายการโครงสร้างไฟล์ในโปรเจกต์ปัจจุบัน
+## 📂 รายการโครงสร้างไฟล์ในโปรเจกต์ปัจจุบัน (รุ่นออฟไลน์)
 
-- 🌐 [index.html](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink/index.html) - หน้าโครงร่างบอร์ดเงินสีชมพู ฟอร์ม Login Autocomplete และ Firebase SDK
-- 🎨 [style.css](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink/style.css) - หน้าตาการใช้งานสไตล์ธีมสีชมพูปทุมชาติ และดีไซน์ที่รองรับมือถือ
-- ⚙️ [app.js](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink/app.js) - รายชื่อสมาชิก, ระบบ Autocomplete, Firebase + IndexedDB + LocalStorage Hybrid Database
-- ⚡ [run.bat](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink/run.bat) - ไฟล์รันด่วนเพื่อเปิดโครงการด้วยดับเบิ้ลคลิก
+- 🌐 [index.html](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink-offline/index.html) - หน้าโครงร่างบอร์ดเงินสีชมพูแบบออฟไลน์
+- 🎨 [style.css](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink-offline/style.css) - หน้าตาการใช้งานสไตล์ธีมสีชมพูปทุมชาติ
+- ⚙️ [app.js](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink-offline/app.js) - รายชื่อสมาชิก, ระบบย่อรูปภาพ, ระบบประวัติแยกตามชื่อ, และฐานข้อมูลออฟไลน์ IndexedDB
+- ⚡ [run.bat](file:///C:/Users/WINDOWS%20XI/.gemini/antigravity/scratch/pink-offline/run.bat) - ไฟล์รันด่วนเพื่อเปิดโครงการด้วยดับเบิ้ลคลิก
 
 ---
 
@@ -110,11 +136,11 @@
 
 | รายการ | ข้อมูล |
 |--------|--------|
-| **Project Name** | pink-team-sports-86e69 |
+| **Project Name** | pink-team-sports-86e69 (ใช้งานเฉพาะฝั่งออนไลน์) |
 | **Firestore Region** | asia-southeast3 (Bangkok) |
 | **Plan** | Spark (Free) |
-| **Real-time Sync** | ✅ เปิดใช้งาน |
-| **Offline Fallback** | ✅ IndexedDB + LocalStorage |
+| **Real-time Sync** | ❌ ปิดใช้งานสำหรับโหมดออฟไลน์ |
+| **Offline Fallback** | ใช้งาน Local Database (LocalStorage + IndexedDB) เป็นหลัก |
 
 ---
 

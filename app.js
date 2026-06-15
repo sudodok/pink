@@ -1,6 +1,28 @@
-// ========== OFFLINE DATABASE CONFIGURATION ==========
-const db = null;
+// ========== FIREBASE CONFIGURATION ==========
+const firebaseConfig = {
+  apiKey: "AIzaSyBd_pyErc9_R8khJ_C7-T0MH9YeP9fMChw",
+  authDomain: "pink-team-sports-86e69.firebaseapp.com",
+  projectId: "pink-team-sports-86e69",
+  storageBucket: "pink-team-sports-86e69.firebasestorage.app",
+  messagingSenderId: "629781285829",
+  appId: "1:629781285829:web:9c91cdaac966a16ce359ac",
+  measurementId: "G-PK1JSB9T32"
+};
+
+let db = null;
 let useFirebase = false;
+
+// เริ่มต้นใช้งาน Firebase
+if (typeof firebase !== 'undefined' && firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        useFirebase = true;
+        console.log("🔥 Firebase initialized successfully! Connected to Firestore Database.");
+    } catch (e) {
+        console.error("Firebase init failed, running in local database mode:", e);
+    }
+}
 
 // Placeholder SVGs to use as mock default images
 const MOCK_RECEIPT_SVG = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="260" viewBox="0 0 200 260" style="background-color:%23f1f5f9;font-family:sans-serif;"><rect width="180" height="240" x="10" y="10" rx="5" fill="white" stroke="%23cbd5e1" stroke-width="2"/><line x1="25" y1="40" x2="175" y2="40" stroke="%23334155" stroke-width="2" stroke-dasharray="4"/><text x="25" y="65" fill="%231e293b" font-size="14" font-weight="bold">RECEIPT</text><text x="25" y="85" fill="%2364748b" font-size="10">Pink Team Sports Day</text><text x="25" y="120" fill="%23334155" font-size="11">Purchased Item</text><text x="25" y="140" fill="%2364748b" font-size="10">Tax invoice included</text><line x1="25" y1="180" x2="175" y2="180" stroke="%23cbd5e1" stroke-width="1"/><text x="25" y="205" fill="%231e293b" font-size="14" font-weight="bold">TOTAL</text><text x="110" y="205" fill="%23ec4899" font-size="14" font-weight="bold">Reimburse</text></svg>`;
@@ -217,6 +239,13 @@ function saveToLocalStorage() {
         };
     } catch (e) {
         console.warn("IndexedDB not supported or blocked on this protocol:", e);
+    }
+    
+    // 3. Save to Firebase Firestore if enabled
+    if (useFirebase && db) {
+        db.collection('settings').doc('pink_team_state').set(state)
+            .then(() => console.log("State synced to Firebase Firestore"))
+            .catch(err => console.error("Error syncing to Firebase:", err));
     }
 }
 

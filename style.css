@@ -1289,4 +1289,10 @@ body, main, header, .panel-card, .metric-card, .tab-btn, .form-control, table, t
     .issue-card {
         padding: 0.75rem !important;
     }
+
+    /* Form controls mobile responsive scaling */
+    .form-control {
+        font-size: 0.85rem !important;
+        padding: 0.65rem 0.75rem !important;
+    }
 }

@@ -789,6 +789,8 @@ function autofillUserForms() {
         
         // Disable request submission
         requestFormWarning.style.display = 'block';
+        const displayRoleName = state.user.username === 'admin' ? 'แอดมิน' : (state.user.username === 'km789' ? 'รองประธานสวัสดิการ' : 'ประธานสวัสดิการ');
+        requestFormWarning.innerHTML = `<i class="fa-solid fa-circle-info"></i> คุณเข้าสู่ระบบด้วยสิทธิ์ "${displayRoleName}" ซึ่งไม่สามารถยื่นเบิกเงินได้`;
         submitRequestBtn.setAttribute('disabled', 'true');
         
         // Enable income panel for president

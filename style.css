@@ -120,6 +120,7 @@ header {
     padding: 0.35rem 1rem;
     border-radius: 2rem;
     border: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .avatar-circle {
@@ -133,11 +134,13 @@ header {
     justify-content: center;
     font-size: 0.8rem;
     box-shadow: 0 0 8px var(--accent-primary-glow);
+    flex-shrink: 0;
 }
 
 .user-text-details {
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
 }
 
 .btn-logout {
@@ -1191,6 +1194,26 @@ body, main, header, .panel-card, .metric-card, .tab-btn, .form-control, table, t
     .tab-btn {
         padding: 0.5rem 0.75rem !important;
         font-size: 0.85rem !important;
+    }
+
+    /* User Info Badge Mobile Scaling */
+    .user-info-badge {
+        padding: 0.25rem 0.75rem !important;
+        gap: 0.5rem !important;
+    }
+    
+    .avatar-circle {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    #user-display-name {
+        font-size: 0.8rem !important;
+    }
+    
+    #user-display-role {
+        font-size: 0.68rem !important;
     }
 
     .tab-text-desktop {

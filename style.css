@@ -473,7 +473,7 @@ main {
 @media (max-width: 576px) {
     .form-row-2col {
         grid-template-columns: 1fr;
-        gap: 0px;
+        gap: 1rem;
     }
 }
 
@@ -1168,4 +1168,41 @@ body, main, header, .panel-card, .metric-card, .tab-btn, .form-control, table, t
     font-size: 0.8rem;
     margin-top: 0.25rem;
     color: var(--text-primary);
+}
+
+/* Mobile Responsive Optimizations */
+@media (max-width: 576px) {
+    /* Main container padding */
+    main {
+        padding: 0.75rem !important;
+    }
+    
+    /* Navigation tabs padding and spacing */
+    .tab-btn {
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Tables font size and padding reduction */
+    th, td {
+        padding: 0.65rem 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    /* Buttons typography */
+    .btn {
+        padding: 0.65rem 1.25rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Modal content layout padding */
+    .modal-content {
+        padding: 1.25rem 1rem !important;
+        border-radius: 1rem !important;
+    }
+    
+    /* Issue list card text spacing */
+    .issue-card {
+        padding: 0.75rem !important;
+    }
 }

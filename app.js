@@ -871,7 +871,7 @@ function handlePresidentLogin(event) {
     if (
         (user === 'Aom' && pass === 'Aom456789') || 
         (user === 'km789' && pass === 'Q32544') ||
-        (user === 'admin' && pass === 'adminanaja123')
+        (user === 'admin' && pass === 'adminnaja123')
     ) {
         errorMsg.style.display = 'none';
         
@@ -905,6 +905,27 @@ function handleLogout() {
     // Clear forms
     document.getElementById('member-login-form').reset();
     document.getElementById('president-login-form').reset();
+}
+
+// Toggle Password Visibility
+function togglePasswordVisibility(inputId, btnEl) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    
+    const icon = btnEl.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    } else {
+        input.type = 'password';
+        if (icon) {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
 }
 
 // UI Rendering Controller

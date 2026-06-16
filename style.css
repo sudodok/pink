@@ -1003,6 +1003,20 @@ tr:hover td {
 }
 
 /* Light Theme Element Overrides */
+.light-theme body {
+    background-color: var(--bg-primary) !important;
+    background-image: radial-gradient(circle at 50% -20%, rgba(236, 72, 153, 0.18) 0%, rgba(253, 248, 250, 0) 70%) !important;
+}
+
+.light-theme header {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom-color: var(--border-color);
+}
+
+.light-theme .login-wrapper {
+    background: radial-gradient(circle at top, #fff5f7 0%, #fdf8fa 100%) !important;
+}
+
 .light-theme th {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
@@ -1057,16 +1071,18 @@ tr:hover td {
     box-shadow: var(--card-shadow);
 }
 
-.light-theme body {
-    background-image: radial-gradient(circle at 50% -20%, rgba(236, 72, 153, 0.15) 0%, rgba(253, 248, 250, 0) 70%) !important;
-}
-
 .light-theme .login-logo-icon {
     background: rgba(236, 72, 153, 0.06) !important;
 }
 
-.light-theme .member-suggest-list div {
-    border-bottom-color: var(--border-color);
+.light-theme #member-suggest-list {
+    background: #ffffff !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 8px 24px rgba(236, 72, 153, 0.15) !important;
+}
+
+.light-theme #member-suggest-list div {
+    border-bottom-color: var(--border-color) !important;
 }
 
 /* Smooth transition when toggling theme */

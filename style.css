@@ -1295,4 +1295,22 @@ body, main, header, .panel-card, .metric-card, .tab-btn, .form-control, table, t
         font-size: 0.85rem !important;
         padding: 0.65rem 0.75rem !important;
     }
+
+    /* Login gateway mobile scaling */
+    .login-card {
+        padding: 1.75rem 1.25rem !important;
+    }
+    
+    .login-type-tabs {
+        flex-direction: column;
+        border-radius: 1rem !important;
+        padding: 0.35rem !important;
+        gap: 0.35rem;
+    }
+    
+    .login-tab-btn {
+        border-radius: 0.75rem !important;
+        padding: 0.65rem 1rem !important;
+        font-size: 0.85rem !important;
+    }
 }

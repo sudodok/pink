@@ -18,25 +18,23 @@
                 <span>Pink Team Finance</span>
             </div>
             
-            <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <!-- Theme Toggle Button -->
-                <button id="theme-toggle" class="btn-theme" onclick="toggleTheme()" title="สลับโหมดกลางวัน/กลางคืน">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-                
-                <!-- User Status & Logout -->
-                <div id="user-status-area" style="display: none; align-items: center; gap: 1rem;">
-                    <div class="user-info-badge">
-                        <span id="user-avatar" class="avatar-circle"><i class="fa-solid fa-user"></i></span>
-                        <div class="user-text-details">
-                            <div id="user-display-name" style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary);">ผู้ใช้งาน</div>
-                            <div id="user-display-role" style="font-size: 0.75rem; color: var(--text-secondary);">ฝ่ายงาน</div>
-                        </div>
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="btn-theme" onclick="toggleTheme()" title="สลับโหมดกลางวัน/กลางคืน">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            
+            <!-- User Status & Logout -->
+            <div id="user-status-area" style="display: none; align-items: center; gap: 1rem;">
+                <div class="user-info-badge">
+                    <span id="user-avatar" class="avatar-circle"><i class="fa-solid fa-user"></i></span>
+                    <div class="user-text-details">
+                        <div id="user-display-name" style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary);">ผู้ใช้งาน</div>
+                        <div id="user-display-role" style="font-size: 0.75rem; color: var(--text-secondary);">ฝ่ายงาน</div>
                     </div>
-                    <button class="btn btn-logout" onclick="handleLogout()" title="ออกจากระบบ">
-                        <i class="fa-solid fa-right-from-bracket"></i> <span class="logout-text">ออกระบบ</span>
-                    </button>
                 </div>
+                <button class="btn btn-logout" onclick="handleLogout()" title="ออกจากระบบ">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span class="logout-text">ออกระบบ</span>
+                </button>
             </div>
         </div>
     </header>

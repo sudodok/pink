@@ -77,16 +77,25 @@ header {
 @media (max-width: 576px) {
     .header-container {
         padding: 1rem;
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
     }
     .logo {
-        justify-content: center;
-        margin-bottom: 0.5rem;
+        margin-right: 0 !important;
+        font-size: 1.25rem !important;
+    }
+    #theme-toggle {
+        margin-left: auto !important;
     }
     #user-status-area {
-        justify-content: space-between;
-        width: 100%;
+        flex-basis: 100% !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+        margin-top: 0.75rem !important;
+        border-top: 1px dashed var(--border-color);
+        padding-top: 0.75rem !important;
     }
 }
 
@@ -99,6 +108,7 @@ header {
     background: linear-gradient(135deg, #f472b6, #ec4899);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-right: auto;
 }
 
 .logo i {
